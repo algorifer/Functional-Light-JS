@@ -1,64 +1,64 @@
 # Functional-Light JavaScript
-# Chapter 2: The Nature Of Functions
+# Глава 2: Природа функций
 
-Functional Programming is **not just programming with the `function` keyword.** Oh, if only it was that easy -- I could end the book right here! Nevertheless, functions really *are* at the center of FP. And it's how we use functions that makes our code *functional*.
+Функциональное программирование — **это не просто программирование с использованием ключевого слова `function`.** О, если бы всё было так просто — я мог бы закончить книгу прямо здесь! Тем не менее, функции действительно *лежат* в самом центре FP.
 
-But how sure are you that you know what *function* really means?
+Но насколько вы уверены, что по-настоящему понимаете, что такое *функция*?
 
-In this chapter, we're going to lay the groundwork for the rest of the book by exploring all the foundational aspects of functions. Actually, this is a review of all the things even a non-FP programmer should know about functions. But certainly if we want to get the most out of FP concepts, it's essential we *know* functions inside and out.
+В этой главе мы заложим основу для всей остальной книги, подробно рассмотрев фундаментальные аспекты функций. На самом деле, это обзор вещей, которые полезны даже обычному программисту, не увлекающемуся FP.
 
-Brace yourself, because there's a lot more to the function than you may have realized.
+Будьте готовы: в функции гораздо больше, чем кажется на первый взгляд.
 
-## What Is a Function?
+## Что такое функция?
 
-The question "What is a function?" superficially seems to have an obvious answer: a function is a collection of code that can be executed one or more times.
+Вопрос «Что такое функция?» на первый взгляд кажется очевидным: функция — это набор кода, который можно выполнить один или несколько раз.
 
-While this definition is reasonable, it's missing some very important essence that is the core of a *function* as it applies to FP. So let's dig below the surface to understand functions more completely.
+Это определение разумно, но оно упускает важное, что является сутью *функции* с точки зрения FP. Давайте разберёмся в этом глубже.
 
-### Brief Math Review
+### Краткий математический экскурс
 
-I know I've promised we'd stay away from math as much as possible, but bear with me for a moment as we quickly observe some fundamental things about functions and graphs from algebra before we proceed.
+Я обещал избегать математики, насколько это возможно, но давайте ненадолго посмотрим на фундаментальные вещи о функциях и графиках из алгебры, прежде чем двигаться дальше.
 
-Do you remember learning anything about `f(x)` back in school? What about the equation `y = f(x)`?
+Помните, как в школе вы сталкивались с `f(x)`? Или с уравнением `y = f(x)`?
 
-Let's say an equation is defined like this: <code>f(x) = 2x<sup>2</sup> + 3</code>. What does that mean? What does it mean to graph that equation? Here's the graph:
+Допустим, у нас есть уравнение: <code>f(x) = 2x<sup>2</sup> + 3</code>. Что это значит? Как выглядит график этого уравнения? Вот он:
 
 <p align="center">
     <img src="images/fig1.png" width="40%">
 </p>
 
-What you can notice is that for any value of `x`, say `2`, if you plug it into the equation, you get `11`. What is `11`, though? It's the *return value* of the `f(x)` function, which earlier we said represents a `y` value.
+Заметьте: для любого значения `x`, например `2`, если подставить его в уравнение, получится `11`. А что такое `11`? Это *возвращаемое значение* функции `f(x)`, которую мы только что определили.
 
-In other words, we can choose to interpret the input and output values as a point at `(2,11)` on that curve in the graph. And for every value of `x` we plug in, we get another `y` value that pairs with it as a coordinate for a point. Another is `(0,3)`, and another is `(-1,5)`. Put all those points together, and you have the graph of that parabolic curve as shown here.
+Другими словами, мы можем интерпретировать входные и выходные значения как точку `(2,11)` на кривой. Для каждого значения `x` мы получаем соответствующее значение `y` — еще одну точку на графике.
 
-So what's any of this got to do with FP?
+Как это связано с FP?
 
-In math, a function always takes input(s), and always gives an output. A term you'll often hear around FP is "morphism"; this is a fancy way of describing a set of values that maps to another set of values, like the inputs of a function related to the outputs of that function.
+В математике функция всегда принимает входные данные и всегда возвращает результат. В FP часто встречается термин "морфизм" — это просто красивое слово для описания отображения множества значений в другое множество.
 
-In algebraic math, those inputs and outputs are often interpreted as components of coordinates to be graphed. In our programs, however, we can define functions with all sorts of input(s) and output(s), even though they'll rarely be interpreted as a visually plotted curve on a graph.
+В алгебре эти входы и выходы часто интерпретируются как координаты для построения графика. В наших программах мы можем определять функции с самыми разными входами и выходами — но сама идея отображения сохраняется.
 
-### Function vs Procedure
+### Функция vs Процедура
 
-So why all the talk of math and graphs? Because essentially Functional Programming is about embracing using functions as *functions* in this mathematical sense.
+Зачем вообще говорить о математике и графиках? Потому что функциональное программирование — это искусство использовать функции именно в математическом смысле.
 
-You may be more accustomed to thinking of functions as procedures. What's the difference? A procedure is an arbitrary collection of functionality. It may have inputs, it may not. It may have an output (`return` value), it may not.
+Скорее всего, вы привыкли думать о функциях как о процедурах. В чем разница? Процедура — это произвольный набор операций. У неё могут быть входные параметры, а может и не быть. Может быть результат, а может и не быть.
 
-A function takes input(s) and definitely always has a `return` value.
+Функция же всегда принимает входные данные и обязательно всегда возвращает значение.
 
-If you plan to do Functional Programming, **you should be using functions as much as possible**, and trying to avoid procedures wherever possible. All your `function`s should take input(s) and return output(s).
+Если вы хотите писать в стиле FP, **используйте функции как можно чаще** и старайтесь избегать процедур, где это возможно. Все ваши `function` должны принимать входные данные и возвращать результат.
 
-Why? The answer to that will have many levels of meaning that we'll uncover throughout this book.
+Зачем? Ответ на этот вопрос включает в себя множество слоёв, которые мы будем раскрывать по ходу книги.
 
-## Function Input
+## Входные данные функции
 
-So far, we can conclude that functions must expect input. But let's dig into how function inputs work.
+Мы уже поняли, что функция должна ожидать входные данные. Давайте разберёмся, как работают входы в функции.
 
-You sometimes hear people refer to these inputs as "arguments" and sometimes as "parameters". So what's that all about?
+Иногда вы слышите термины "аргументы" и "параметры". В чём разница?
 
-*Arguments* are the values you pass in, and *parameters* are the named variables inside the function that receive those passed-in values. Example:
+*Аргументы* — это значения, которые вы передаёте при вызове функции, а *параметры* — это именованные переменные внутри функции, которые принимают эти значения. Пример:
 
 ```js
-function foo(x,y) {
+function foo(x, y) {
     // ..
 }
 
@@ -67,15 +67,13 @@ var a = 3;
 foo( a, a * 2 );
 ```
 
-`a` and `a * 2` (actually, the result of `a * 2`, which is `6`) are the *arguments* to the `foo(..)` call. `x` and `y` are the *parameters* that receive the argument values (`3` and `6`, respectively).
+`a` и `a * 2` (на самом деле, результат `a * 2`, то есть `6`) — это *аргументы* при вызове `foo(..)`. `x` и `y` — это *параметры* внутри функции, которые получают значения `3` и `6` соответственно.
 
-**Note:** In JavaScript, there's no requirement that the number of *arguments* matches the number of *parameters*. If you pass more *arguments* than you have declared *parameters* to receive them, the values pass in just fine untouched. These values can be accessed in a few different ways, including the old-school `arguments` object you may have heard of before. If you pass fewer *arguments* than the declared *parameters*, each unmatched parameter is treated as an "undefined" variable, meaning it's present and available in the scope of the function, but just starts out with the empty `undefined` value.
+**Примечание:** В JavaScript нет требования, чтобы количество *аргументов* соответствовало количеству *параметров*. Если передать больше аргументов, чем объявлено параметров, лишние будут проигнорированы. Если меньше — необъявленным параметрам будет присвоено значение `undefined`.
 
-### Defaulting Parameters
+### Значения по умолчанию для параметров
 
-As of ES6, parameters can declare *default values*. In the case where the argument for that parameter is not passed, or it's passed the value `undefined`, the default assignment expression is substituted.
-
-Consider:
+Начиная с ES6, параметры могут иметь *значения по умолчанию*. Если аргумент не передан или равен `undefined`, будет использовано значение по умолчанию:
 
 ```js
 function foo(x = 3) {
@@ -88,39 +86,39 @@ foo( null );            // null
 foo( 0 );               // 0
 ```
 
-It's always a good practice to think about any default cases that can aid the usability of your functions. However, defaulting parameters can lead to more complexity in terms of reading and understanding the variations of how a function is called. Be judicious in how much you rely on this feature.
+Всегда полезно продумать значения по умолчанию для повышения удобства функций. Но учтите: слишком сложные значения по умолчанию могут затруднить чтение и понимание кода.
 
-### Counting Inputs
+### Подсчёт входных параметров
 
-The number of arguments a function "expects" -- how many arguments you'll likely want to pass to it -- is determined by the number of parameters that are declared:
+Ожидаемое количество аргументов определяется числом объявленных параметров:
 
 ```js
-function foo(x,y,z) {
+function foo(x, y, z) {
     // ..
 }
 ```
 
-`foo(..)` *expects* three arguments, because it has three declared parameters. This count has a special term: arity. Arity is the number of parameters in a function declaration. The arity of `foo(..)` is `3`.
+`foo(..)` *ожидает* три аргумента, потому что объявлено три параметра. Такое количество называется арностью (arity) функции. Арность `foo(..)` равна 3.
 
-Furthermore, a function with arity 1 is also called "unary", a function with arity 2 is also called "binary", and a function with arity 3 or higher is called "n-ary".
+Функцию с одной арностью называют "унарной", с двумя — "бинарной", с тремя и более — "n-арной".
 
-You may wish to inspect a function reference during the runtime of a program to determine its arity. This can be done with the `length` property of that function reference:
+Во время выполнения можно узнать арность функции через свойство `length`:
 
 ```js
-function foo(x,y,z) {
+function foo(x, y, z) {
     // ..
 }
 
 foo.length;             // 3
 ```
 
-One reason for determining the arity during execution would be if a piece of code received a function reference from multiple sources, and sent different values depending on the arity of each.
+Иногда определять арность полезно, если функция может приходить из разных источников и нужно по-разному передавать параметры.
 
-For example, imagine a case where an `fn` function reference could expect one, two, or three arguments, but you always want to just pass a variable `x` in the last position:
+Например:
 
 ```js
-// `fn` is set to some function reference
-// `x` exists with some value
+// fn — ссылка на какую-то функцию
+// x — переменная со значением
 
 if (fn.length == 1) {
     fn( x );
@@ -133,20 +131,20 @@ else if (fn.length == 3) {
 }
 ```
 
-**Tip:** The `length` property of a function is read-only and it's determined at the time you declare the function. It should be thought of as essentially a piece of metadata that describes something about the intended usage of the function.
+**Совет:** Свойство `length` — только для чтения и определяется при объявлении функции. Это метаданные, которые рассказывают о сигнатуре функции, но не гарантируют правильное поведение.
 
-One gotcha to be aware of is that certain kinds of parameter list variations can make the `length` property of the function report something different than you might expect:
+Есть нюансы: некоторые вариации параметров влияют на значение `length`:
 
 ```js
-function foo(x,y = 2) {
+function foo(x, y = 2) {
     // ..
 }
 
-function bar(x,...args) {
+function bar(x, ...args) {
     // ..
 }
 
-function baz( {a,b} ) {
+function baz( {a, b} ) {
     // ..
 }
 
@@ -155,58 +153,38 @@ bar.length;             // 1
 baz.length;             // 1
 ```
 
-What about counting the number of arguments the current function call received? This was once trivial, but now the situation is slightly more complicated. Each function has an `arguments` object (array-like) available that holds a reference to each of the arguments passed in. You can then inspect the `length` property of `arguments` to figure out how many were actually passed:
+А как узнать, сколько аргументов реально было передано? Раньше это делалось просто через объект `arguments`:
 
 ```js
-function foo(x,y,z) {
+function foo(x, y, z) {
     console.log( arguments.length );
 }
 
 foo( 3, 4 );    // 2
 ```
 
-As of ES5 (and strict mode, specifically), `arguments` is considered by some to be sort of deprecated; many avoid using it if possible. In JS, we "never" break backward compatibility no matter how helpful that may be for future progress, so `arguments` will never be removed. But it's now commonly suggested that you avoid using it whenever possible.
+В ES5+ (и строгом режиме) использование `arguments` считается нежелательным, но для получения количества аргументов — допустимо использовать только `arguments.length`.
 
-However, I suggest that `arguments.length`, and only that, is OK to keep using for those cases where you need to care about the passed number of arguments. A future version of JS might possibly add a feature that offers the ability to determine the number of arguments passed without consulting `arguments.length`; if that happens, then we can fully drop usage of `arguments`!
+Никогда **не используйте** позиционное обращение вроде `arguments[1]` — только `arguments.length`, и только при необходимости.
 
-Be careful: **never** access arguments positionally, like `arguments[1]`. Stick to `arguments.length` only, and only if you must.
+Но как получить "лишние" аргументы? Прежде чем делать это, спросите себя, действительно ли это нужно — обычно это редкий случай, и, возможно, функцию стоит переписать.
 
-Except, how will you access an argument that was passed in a position beyond the declared parameters? I'll answer that in a moment; but first, take a step back and ask yourself, "Why would I want to do that?" Seriously. Think about that closely for a minute.
-
-It should be pretty rare that this occurs; it shouldn't be something you regularly expect or rely on when writing your functions. If you find yourself in such a scenario, spend an extra 20 minutes trying to design the interaction with that function in a different way. Name that extra argument even if it's exceptional.
-
-A function signature that accepts an indeterminate amount of arguments is referred to as a variadic function. Some people prefer this style of function design, but I think you'll find that often the FPer wants to avoid these where possible.
-
-OK, enough harping on that point.
-
-Say you do need to access the arguments in a positional array-like way, possibly because you're accessing an argument that doesn't have a formal parameter at that position. How do we do it?
-
-ES6 to the rescue! Let's declare our function with the `...` operator -- variously referred to as "spread", "rest", or (my preference) "gather":
+Если всё же нужно, используйте синтаксис ES6 с оператором "rest" (`...`):
 
 ```js
-function foo(x,y,z,...args) {
-    // ..
-}
-```
-
-See the `...args` in the parameter list? That's an ES6 declarative form that tells the engine to collect (ahem, "gather") all remaining arguments (if any) not assigned to named parameters, and put them in a real array named `args`. `args` will always be an array, even if it's empty. But it **will not** include values that are assigned to the `x`, `y`, and `z` parameters, only anything else that's passed in beyond those first three values:
-
-```js
-function foo(x,y,z,...args) {
+function foo(x, y, z, ...args) {
     console.log( x, y, z, args );
 }
 
 foo();                  // undefined undefined undefined []
 foo( 1, 2, 3 );         // 1 2 3 []
-foo( 1, 2, 3, 4 );      // 1 2 3 [ 4 ]
-foo( 1, 2, 3, 4, 5 );   // 1 2 3 [ 4, 5 ]
+foo( 1, 2, 3, 4 );      // 1 2 3 [4]
+foo( 1, 2, 3, 4, 5 );   // 1 2 3 [4, 5]
 ```
 
-So, if you *really* want to design a function that can account for an arbitrary number of arguments to be passed in, use `...args` (or whatever name you like) on the end. Now, you'll have a real, non-deprecated, non-yucky array to access those argument values from.
+Теперь все "лишние" аргументы собираются в массив `args`, начиная с позиции `0`. Его длина не включает первые три значения.
 
-Just pay attention to the fact that the value `4` is at position `0` of that `args`, not position `3`. And its `length` value won't include those three `1`, `2`, and `3` values. `...args` gathers everything else, not including the `x`, `y`, and `z`.
-
-You *can* use the `...` operator in the parameter list even if there's no other formal parameters declared:
+Можно использовать только `...args`:
 
 ```js
 function foo(...args) {
@@ -214,11 +192,11 @@ function foo(...args) {
 }
 ```
 
-Now `args` will be the full array of arguments, whatever they are, and you can use `args.length` to know exactly how many arguments have been passed in. And you're safe to use `args[1]` or `args[317]` if you so choose. Please don't pass in 318 arguments, though.
+Теперь `args` — это массив всех переданных аргументов, и можно безопасно использовать `args[1]`, `args[317]` и т.д.
 
-### Arrays of Arguments
+### Массивы аргументов
 
-What if you wanted to pass along an array of values as the arguments to a function call?
+Что если нужно передать массив значений как аргументы функции?
 
 ```js
 function foo(...args) {
@@ -230,9 +208,9 @@ var arr = [ 1, 2, 3, 4, 5 ];
 foo( ...arr );                      // 4
 ```
 
-Our new friend `...` is used, but now not just in the parameter list; it's also used in the argument list at the call-site. It has the opposite behavior in this context. In a parameter list, we said it *gathered* arguments together. In an argument list, it *spreads* them out. So the contents of `arr` are actually spread out as individual arguments to the `foo(..)` call. Do you see how that's different from just passing in a reference to the whole `arr` array?
+Оператор `...` может использоваться и при вызове функции, чтобы "раскрыть" массив в отдельные аргументы.
 
-By the way, multiple values and `...` spreadings can be interleaved, as you see fit:
+Можно комбинировать разные значения и раскрытия:
 
 ```js
 var arr = [ 2 ];
@@ -240,15 +218,13 @@ var arr = [ 2 ];
 foo( 1, ...arr, 3, ...[4,5] );      // 4
 ```
 
-Think of `...` in this symmetric sense: in a value-list position, it *spreads*. In an assignment position -- like a parameter list, because arguments get *assigned to* parameters -- it *gathers*.
+Запомните: в списке значений (при вызове функции) `...` *раскрывает* массив, а в списке параметров (при объявлении функции) — *собирает* остаток аргументов в массив.
 
-Whichever behavior you invoke, `...` makes working with arrays of arguments much easier. Gone are the days of `slice(..)`, `concat(..)`, and `apply(..)` to wrangle our argument value arrays.
+**Совет:** Старые методы `slice(..)`, `concat(..)` и `apply(..)` всё ещё могут быть полезны, но `...` гораздо удобнее и декларативнее.
 
-**Tip:** Actually, these methods are not entirely useless. There will be a few places we rely on them throughout the code in this book. But certainly in most places, `...` will be much more declaratively readable, and preferable as a result.
+### Деструктуризация параметров
 
-### Parameter Destructuring
-
-Consider the variadic `foo(..)` from the previous section:
+Возьмём пример с вариативной функцией:
 
 ```js
 function foo(...args) {
@@ -258,7 +234,7 @@ function foo(...args) {
 foo( ...[1,2,3] );
 ```
 
-What if we wanted to change that interaction so the caller of our function passes in an array of values instead of individual argument values? Just drop the two `...` usages:
+Если мы хотим, чтобы функция принимала именно массив, а не отдельные значения, просто уберите оба `...`:
 
 ```js
 function foo(args) {
@@ -268,101 +244,67 @@ function foo(args) {
 foo( [1,2,3] );
 ```
 
-Simple enough. But what if now we wanted to give a parameter name to each of the first two values in the passed-in array? We aren't declaring individual parameters anymore, so it seems we lost that ability.
-
-Thankfully, ES6 destructuring is the answer. Destructuring is a way to declare a *pattern* for the kind of structure (object, array, etc.) that you expect to see, and how decomposition (assignment) of its individual parts should be processed.
-
-Consider:
+А если теперь хочется разложить массив по переменным? Используйте деструктуризацию:
 
 <a name="funcparamdestr"></a>
 
 ```js
-function foo( [x,y,...args] = [] ) {
+function foo([x, y, ...args] = []) {
     // ..
 }
 
-foo( [1,2,3] );
+foo([1,2,3]);
 ```
 
-Do you spot the `[ .. ]` brackets around the parameter list now? This is called array parameter destructuring.
+`[x, y, ...args]` в параметрах — это деструктуризация массива: первые два значения попадут в `x` и `y`, остальные — в массив `args`.
 
-In this example, destructuring tells the engine that an array is expected in this assignment position (aka parameter). The pattern says to take the first value of that array and assign to a local parameter variable called `x`, the second to `y`, and whatever is left is *gathered* into `args`.
+### Важность декларативного стиля
 
-### The Importance of Declarative Style
-
-Considering the destructured `foo(..)` we just looked at, we could instead have processed the parameters manually:
+Вместо деструктуризации, можно было бы сделать так:
 
 ```js
 function foo(params) {
     var x = params[0];
     var y = params[1];
-    var args = params.slice( 2 );
+    var args = params.slice(2);
 
     // ..
 }
 ```
 
-But here we highlight a principle we only briefly introduced in [Chapter 1](ch1.md/#readability): declarative code communicates more effectively than imperative code.
+Но декларативный код (например, с деструктуризацией) лучше коммуницирует намерение, чем императивный (с ручными присваиваниями).
 
-Declarative code (for example, the destructuring in the former `foo(..)` snippet, or the `...` operator usages) focuses on what the outcome of a piece of code should be.
+Декларативный код показывает *что* мы хотим получить, а императивный — *как* это сделать. Чем больше мы будем использовать декларативные возможности языка и библиотек, тем проще будет читать код.
 
-Imperative code (such as the manual assignments in the latter snippet) focuses more on how to get the outcome. If you later read such imperative code, you have to mentally execute all of it to understand the desired outcome. The outcome is *coded* there, but it's not as clear because it's clouded by the details of *how* we get there.
+## Именованные аргументы
 
-The earlier `foo(..)` is regarded as more readable, because the destructuring hides the unnecessary details of *how* to manage the parameter inputs; the reader is free to focus only on *what* we will do with those parameters. That's clearly the most important concern, so it's what the reader should be focused on to understand the code most completely.
-
-Wherever possible, and to whatever degrees our language and our libraries/frameworks will let us, **we should be striving for declarative, self-explanatory code.**
-
-## Named Arguments
-
-Just as we can destructure array parameters, we can destructure object parameters:
+Как и массивы, можно деструктурировать и объектные параметры:
 
 ```js
-function foo( {x,y} = {} ) {
+function foo({x, y} = {}) {
     console.log( x, y );
 }
 
-foo( {
+foo({
     y: 3
-} );                    // undefined 3
+});                    // undefined 3
 ```
 
-We pass in an object as the single argument, and it's destructured into two separate parameter variables `x` and `y`, which are assigned the values of those corresponding property names from the object passed in. It didn't matter that the `x` property wasn't on the object; it just ended up as a variable with `undefined` like you'd expect.
+Мы передаём объект, и его поля автоматически попадают в переменные `x` и `y`.
 
-But the part of parameter object destructuring I want you to pay attention to is the object being passed into `foo(..)`.
+Главное преимущество — для передачи аргументов не важен их порядок, и необязательные параметры можно просто опускать.
 
-With a normal call-site like `foo(undefined,3)`, position is used to map from argument to parameter; we put the `3` in the second position to get it assigned to a `y` parameter. But at this new kind of call-site where parameter destructuring is involved, a simple object-property indicates which parameter (`y`) the argument value `3` should be assigned to.
+В некоторых языках есть явная поддержка именованных аргументов. В JavaScript можно имитировать это, передавая объект.
 
-We didn't have to account for `x` in *that* call-site because in effect we didn't care about `x`. We just omitted it, instead of having to do something distracting like passing `undefined` as a positional placeholder.
+Такой подход особенно полезен при большом количестве параметров.
 
-Some languages have an explicit feature for this: named arguments. In other words, at the call-site, labeling an input value to indicate which parameter it maps to. JavaScript doesn't have named arguments, but parameter object destructuring is the next best thing.
+**Совет:** Если этот стиль вас заинтересовал, загляните в [приложение C, библиотека FPO](apC.md/#bonus-fpo).
 
-Another FP-related benefit of using an object destructuring to pass in potentially multiple arguments is that a function that only takes one parameter (the object) is much easier to compose with another function's single output. Much more on that in [Chapter 4](ch4.md).
+## Возвращаемое значение функции
 
-### Unordered Parameters
+Теперь перейдём от входов к выходу функции.
 
-Another key benefit is that named arguments, by virtue of being specified as object properties, are not fundamentally ordered. That means we can specify inputs in whatever order we want:
-
-```js
-function foo( {x,y} = {} ) {
-    console.log( x, y );
-}
-
-foo( {
-    y: 3
-} );                    // undefined 3
-```
-
-We're skipping the `x` parameter by simply omitting it. Or we could specify an `x` argument if we cared to, even if we listed it after `y` in the object literal. The call-site is no longer cluttered by ordered-placeholders like `undefined` to skip a parameter.
-
-Named arguments are much more flexible, and attractive from a readability perspective, especially when the function in question can take three, four, or more inputs.
-
-**Tip:** If this style of function arguments seems useful or interesting to you, check out coverage of my [FPO library in Appendix C](apC.md/#bonus-fpo).
-
-## Function Output
-
-Let's shift our attention from a function's inputs to its output.
-
-In JavaScript, functions always return a value. These three functions all have identical `return` behavior:
+В JavaScript функция всегда возвращает значение. Следующие три функции эквивалентны по возвращаемому результату:
 
 ```js
 function foo() {}
@@ -376,11 +318,11 @@ function baz() {
 }
 ```
 
-The `undefined` value is implicitly `return`ed if you have no `return` or if you just have an empty `return;`.
+Если нет явного `return`, функция возвращает `undefined`.
 
-But keeping as much with the spirit of FP function definition as possible -- using functions and not procedures -- our functions should always have outputs, which means they should explicitly `return` a value, and usually not `undefined`.
+Но если мы хотим следовать духу FP — пишем функции, а не процедуры — функции всегда должны явно возвращать результат.
 
-A `return` statement can only return a single value. So if your function needs to return multiple values, your only viable option is to collect them into a compound value like an array or an object:
+В JS функция может вернуть только одно значение. Если нужно вернуть несколько, соберите их в массив или объект:
 
 ```js
 function foo() {
@@ -388,24 +330,16 @@ function foo() {
     var retValue2 = 31;
     return [ retValue1, retValue2 ];
 }
-```
 
-Then, we'll assign `x` and `y` from two respective items in the array that comes back from `foo()`:
-
-```js
 var [ x, y ] = foo();
 console.log( x + y );           // 42
 ```
 
-Collecting multiple values into an array (or object) to return, and subsequently destructuring those values back into distinct assignments, is a way to transparently express multiple outputs for a function.
+Однако задумайтесь, нельзя ли переписать функцию так, чтобы не возвращать несколько значений, а разделить на более мелкие.
 
-**Tip:** I'd be remiss if I didn't suggest you take a moment to consider if a function needing multiple outputs could be refactored to avoid that, perhaps separated into two or more smaller single-purpose functions? Sometimes that will be possible, sometimes not; but you should at least consider it.
+### Ранние возвраты
 
-### Early Returns
-
-The `return` statement doesn't just return a value from a function. It's also a flow control structure; it ends the execution of the function at that point. A function with multiple `return` statements thus has multiple possible exit points, meaning that it may be harder to read a function to understand its output behavior if there are many paths that could produce that output.
-
-Consider:
+`return` не только возвращает значение, но и завершает выполнение функции. Пример:
 
 ```js
 function foo(x) {
@@ -423,15 +357,13 @@ function foo(x) {
 }
 ```
 
-Pop quiz: without cheating and running this code in your browser, what does `foo(2)` return? What about `foo(4)`? And `foo(8)`? And `foo(12)`?
+Попробуйте угадать, что вернёт `foo(2)`? `foo(4)`? `foo(8)`? `foo(12)`?
 
-How confident are you in your answers? How much mental tax did you pay to get those answers? I got it wrong the first two times I tried to think it through, and I wrote it!
+**Ответ:** 2, 2, 8, 13.
 
-I think part of the readability problem here is that we're using `return` not just to return different values, but also as a flow control construct to quit a function's execution early in certain cases. There are obviously better ways to write that flow control (the `if` logic, etc.), but I also think there are ways to make the output paths more obvious.
+Такой код сложнее читать, потому что `return` используется и для возврата результата, и для управления потоком.
 
-**Note:** The answers to the pop quiz are `2`, `2`, `8`, and `13`.
-
-Consider this version of the code:
+Более читаемый вариант:
 
 ```js
 function foo(x) {
@@ -461,17 +393,13 @@ function foo(x) {
 }
 ```
 
-This version is unquestionably more verbose. But I would argue it's slightly simpler logic to follow, because every branch where `retValue` can get set is *guarded* by the condition that checks if it's already been set.
+Этот вариант длиннее, но его проще читать: в каждом месте мы явно проверяем, что значение ещё не установлено.
 
-Rather than `return`ing from the function early, we used normal flow control (`if` logic) to determine the `retValue`'s assignment. At the end, we simply `return retValue`.
+Не обязательно всегда писать один `return` на функцию, но стоит быть внимательнее к тому, как используется возврат.
 
-I'm not unconditionally saying that you should always have a single `return`, or that you should never do early `return`s, but I do think you should be careful about the flow control part of `return` creating more implicitness in your function definitions. Try to figure out the most explicit way to express the logic; that will often be the best way.
+### Неявные возвращаемые значения
 
-### Un`return`ed Outputs
-
-One technique that you've probably used in most code you've written, and maybe didn't even think about it much, is to have a function output some or all of its values by simply changing variables outside itself.
-
-Remember our <code>f(x) = 2x<sup>2</sup> + 3</code> function from earlier in the chapter? We could have defined it like this in JS:
+Иногда функция возвращает результат не через `return`, а изменяя внешние переменные:
 
 ```js
 var y;
@@ -485,7 +413,7 @@ f( 2 );
 y;                      // 11
 ```
 
-I know this is a silly example; we could just as easily have `return`d the value instead of setting it into `y` from within the function:
+Лучше так:
 
 ```js
 function f(x) {
@@ -493,17 +421,12 @@ function f(x) {
 }
 
 var y = f( 2 );
-
 y;                      // 11
 ```
 
-Both functions accomplish the same task, so is there any reason we should pick one version over the other? **Yes, absolutely.**
+Изменение внешних переменных — это неявный вывод, а явный `return` делает код прозрачнее.
 
-One way to explain the difference is that the `return` in the latter version signals an explicit output, whereas the `y` assignment in the former is an implicit output. You may already have some intuition that guides you in such cases; typically, developers prefer explicit patterns over implicit ones.
-
-But changing a variable in an outer scope, as we did with the `y` assignment inside of `foo(..)`, is just one way of achieving an implicit output. A more subtle example is making changes to non-local values via reference.
-
-Consider:
+Более сложный пример — изменение внешних данных (например, массива):
 
 ```js
 function sum(list) {
@@ -522,22 +445,16 @@ var nums = [ 1, 3, 9, 27, , 84 ];
 sum( nums );            // 124
 ```
 
-The most obvious output from this function is the sum `124`, which we explicitly `return`ed. But do you spot the other output? Try that code and then inspect the `nums` array. Now do you spot the difference?
+Теперь в массиве `nums` на месте пустого слота появится `0`. Это называется побочным эффектом функции (side effect). Функция без побочных эффектов — это чистая функция. Мы ещё поговорим о них позже.
 
-Instead of an `undefined` empty slot value in position `4`, now there's a `0`. The harmless looking `list[i] = 0` operation ended up affecting the array value on the outside, even though we operated on a local `list` parameter variable.
+## Функции высшего порядка
 
-Why? Because `list` holds a reference-copy of the `nums` reference, not a value-copy of the `[1,3,9,..]` array value. JavaScript uses references and reference-copies for arrays, objects, and functions, so we may create an accidental output from our function all too easily.
+Функция может принимать и возвращать значения любого типа, в том числе другие функции. Функция, которая принимает или возвращает функцию, называется функцией высшего порядка.
 
-This implicit function output has a special name in the FP world: side effects. And a function that has *no side effects* also has a special name: pure function. We'll talk a lot more about these in [Chapter 5](ch5.md), but the punchline is that we'll want to prefer pure functions and avoid side effects wherever possible.
-
-## Functions of Functions
-
-Functions can receive and return values of any type. A function that receives or returns one or more other function values has the special name: higher-order function.
-
-Consider:
+Пример:
 
 ```js
-function forEach(list,fn) {
+function forEach(list, fn) {
     for (let v of list) {
         fn( v );
     }
@@ -549,9 +466,9 @@ forEach( [1,2,3,4,5], function each(val){
 // 1 2 3 4 5
 ```
 
-`forEach(..)` is a higher-order function because it receives a function as an argument.
+`forEach(..)` — функция высшего порядка, потому что принимает функцию как аргумент.
 
-A higher-order function can also output another function, like:
+Функция высшего порядка может возвращать другую функцию:
 
 ```js
 function foo() {
@@ -565,7 +482,7 @@ var f = foo();
 f( "Hello!" );          // HELLO!
 ```
 
-`return` is not the only way to "output" an inner function:
+Можно передавать функцию через другую функцию:
 
 ```js
 function foo() {
@@ -581,17 +498,17 @@ function bar(func) {
 foo();                  // HELLO!
 ```
 
-Functions that treat other functions as values are higher-order functions by definition. FPers write these all the time!
+Функции, которые принимают или возвращают функции, — основа FP.
 
-### Keeping Scope
+### Работа с областью видимости (closure)
 
-One of the most powerful things in all of programming, and especially in FP, is how a function behaves when it's inside another function's scope. When the inner function makes reference to a variable from the outer function, this is called closure.
+Одна из самых мощных идей — поведение функции, находящейся внутри другой функции. Если внутренняя функция ссылается на переменные внешней, возникает замыкание (closure).
 
-Defined pragmatically:
+Определение:
 
-> Closure is when a function remembers and accesses variables from outside of its own scope, even when that function is executed in a different scope.
+> Замыкание — это когда функция запоминает и имеет доступ к переменным из внешнего скоупа, даже если она выполняется вне этого скоупа.
 
-Consider:
+Пример:
 
 ```js
 function foo(msg) {
@@ -607,11 +524,9 @@ var helloFn = foo( "Hello!" );
 helloFn();              // HELLO!
 ```
 
-The `msg` parameter variable in the scope of `foo(..)` is referenced inside the inner function. When `foo(..)` is executed and the inner function is created, it captures the access to the `msg` variable, and retains that access even after being `return`ed.
+`msg` из области видимости `foo(..)` доступна в `inner`. Даже после завершения `foo(..)`, переменная `msg` не исчезает, пока есть ссылка на внутреннюю функцию.
 
-Once we have `helloFn`, a reference to the inner function, `foo(..)` has finished and it would seem as if its scope should have gone away, meaning the `msg` variable would no longer exist. But that doesn't happen, because the inner function has a closure over `msg` that keeps it alive. The closed over `msg` variable survives for as long as the inner function (now referenced by `helloFn` in a different scope) stays around.
-
-Let's look at a few more examples of closure in action:
+Ещё примеры замыканий:
 
 ```js
 function person(name) {
@@ -627,9 +542,7 @@ fred();                 // I am Fred
 susan();                // I am Susan
 ```
 
-The inner function `identify()` has closure over the parameter `name`.
-
-The access that closure enables is not restricted to merely reading the variable's original value -- it's not just a snapshot but rather a live link. You can update the value, and that new current state remains remembered until the next access:
+Замыкание — это не только "заморозка" значения, но и "живое" соединение:
 
 ```js
 function runningCounter(start) {
@@ -648,9 +561,9 @@ score();                // 2
 score( 13 );            // 15
 ```
 
-**Warning:** For reasons that we'll explore in more depth later in the book, this example of using closure to remember a state that changes (`val`) is probably something you'll want to avoid where possible.
+**Внимание:** Такой способ хранения изменяемого состояния через замыкание — то, чего чаще всего стоит избегать в FP. Мы обсудим это подробнее позже.
 
-If you have an operation that needs two inputs, one of which you know now but the other will be specified later, you can use closure to remember the first input:
+Если операция требует два входа, один из которых известен заранее, а другой — позже, используйте замыкание:
 
 ```js
 function makeAdder(x) {
@@ -659,22 +572,20 @@ function makeAdder(x) {
     };
 }
 
-// we already know `10` and `37` as first inputs, respectively
+// заранее известны 10 и 37
 var addTo10 = makeAdder( 10 );
 var addTo37 = makeAdder( 37 );
 
-// later, we specify the second inputs
+// позже передаём второй аргумент
 addTo10( 3 );           // 13
 addTo10( 90 );          // 100
 
 addTo37( 13 );          // 50
 ```
 
-Normally, a `sum(..)` function would take both an `x` and `y` input to add them together. But in this example we receive and remember (via closure) the `x` value(s) first, while the `y` value(s) are separately specified later.
+Этот подход называется частичным применением или каррированием. Подробнее — в [главе 3](ch3.md).
 
-**Note:** This technique of specifying inputs in successive function calls is very common in FP, and comes in two forms: partial application and currying. We'll dive into them more thoroughly in [Chapter 3](ch3.md/#some-now-some-later).
-
-Of course, since functions are just values in JS, we can remember function values via closure:
+Также можно передавать не только значения, но и функции:
 
 ```js
 function formatter(formatFn) {
@@ -695,25 +606,21 @@ lower( "WOW" );             // wow
 upperFirst( "hello" );      // Hello
 ```
 
-Instead of distributing/repeating the `toUpperCase()` and `toLowerCase()` logic all over our code, FP encourages us to create simple functions that encapsulate -- a fancy way of saying wrapping up -- that behavior.
+FP поощряет создание простых функций-обёрток, чтобы их легко было комбинировать.
 
-Specifically, we create two simple unary functions `lower(..)` and `upperFirst(..)`, because those functions will be much easier to wire up to work with other functions in the rest of our program.
+**Совет:** Заметьте, что `upperFirst(..)` мог бы использовать `lower(..)`.
 
-**Tip:** Did you spot how `upperFirst(..)` could have used `lower(..)`?
+Замыкания — одна из важнейших практик во всём программировании и фундамент FP. Убедитесь, что вы хорошо их понимаете!
 
-We'll use closure heavily throughout the rest of the text. It may just be the most important foundational practice in all of FP, if not programming as a whole. Make sure you're really comfortable with it!
+## Синтаксис
 
-## Syntax
+Перед тем как двигаться дальше, обсудим синтаксис функций.
 
-Before we move on from this primer on functions, let's take a moment to discuss their syntax.
+В отличие от других разделов книги, здесь больше субъективных мнений и предпочтений. Выбор всегда за вами.
 
-More than many other parts of this text, the discussions in this section are mostly opinion and preference, whether you agree with the views presented here or take opposite ones. These ideas are highly subjective, though many people seem to feel rather absolutely about them.
+### Имя функции
 
-Ultimately, you get to decide.
-
-### What's in a Name?
-
-Syntactically speaking, function declarations require the inclusion of a name:
+Объявление функции требует имени:
 
 ```js
 function helloMyNameIs() {
@@ -721,27 +628,23 @@ function helloMyNameIs() {
 }
 ```
 
-But function expressions can come in both named and anonymous forms:
+Функциональные выражения могут быть как именованными, так и анонимными:
 
 ```js
 foo( function namedFunctionExpr(){
     // ..
 } );
 
-bar( function(){    // <-- look, no name!
+bar( function(){    // без имени!
     // ..
 } );
 ```
 
-What exactly do we mean by anonymous, by the way? Specifically, functions have a `name` property that holds the string value of the name the function was given syntactically, such as `"helloMyNameIs"` or `"namedFunctionExpr"`. This `name` property is most notably used by the console/developer tools of your JS environment to list the function when it participates in a stack trace (usually from an exception).
+Анонимные функции обычно отображаются как `(anonymous function)`.
 
-Anonymous functions are generally displayed as `(anonymous function)`.
+Если вы когда-либо отлаживали программу по stack trace, вы наверняка сталкивались с этим "безымянным" адом. Имена функций помогают понять, что происходит.
 
-If you've ever had to debug a JS program from nothing but a stack trace of an exception, you probably have felt the pain of seeing `(anonymous function)` appear line after line. This listing doesn't give a developer any clue whatsoever as to the path the exception came from. It's not doing the developer any favors.
-
-If you name your function expressions, the name is always used. So if you use a good name like `handleProfileClicks` instead of `foo`, you'll get much more helpful stack traces.
-
-As of ES6, anonymous function expressions are in certain cases aided by *name inferencing*. Consider:
+С ES6 движок может "догадаться" о желаемом имени функции:
 
 ```js
 var x = function(){};
@@ -749,9 +652,7 @@ var x = function(){};
 x.name;         // x
 ```
 
-If the engine is able to guess what name you *probably* want the function to take, it will go ahead and do so.
-
-But beware, not all syntactic forms benefit from name inferencing. Probably the most common place a function expression shows up is as an argument to a function call:
+Но не всегда. Например, часто используемые функции-аргументы останутся без имени:
 
 ```js
 function foo(fn) {
@@ -761,18 +662,14 @@ function foo(fn) {
 var x = function(){};
 
 foo( x );               // x
-foo( function(){} );    //
+foo( function(){} );    // ""
 ```
 
-When the name can't be inferred from the immediate surrounding syntax, it remains an empty string. Such a function will be reported as `(anonymous function)` in a stack trace should one occur.
-
-There are other benefits to a function being named besides the debugging question. First, the syntactic name (aka lexical name) is useful for internal self-reference. Self-reference is necessary for recursion (both sync and async) and also helpful with event handlers.
-
-Consider these different scenarios:
+Имена функций полезны не только для отладки, но и для самоссылки (например, для рекурсии или снятия обработчиков событий):
 
 ```js
-// sync recursion:
-function findPropIn(propName,obj) {
+// синхронная рекурсия:
+function findPropIn(propName, obj) {
     if (obj == undefined || typeof obj != "object") return;
 
     if (propName in obj) {
@@ -790,30 +687,24 @@ function findPropIn(propName,obj) {
 ```
 
 ```js
-// async recursion:
+// асинхронная рекурсия:
 setTimeout( function waitForIt(){
-    // does `it` exist yet?
     if (!o.it) {
-        // try again later
         setTimeout( waitForIt, 100 );
     }
 }, 100 );
 ```
 
 ```js
-// event handler unbinding
+// отвязка обработчика событий
 document.getElementById( "onceBtn" )
     .addEventListener( "click", function handleClick(evt){
-        // unbind event
         evt.target.removeEventListener( "click", handleClick, false );
-
         // ..
     }, false );
 ```
 
-In all these cases, the named function's lexical name was a useful and reliable self-reference from inside itself.
-
-Moreover, even in simple cases with one-liner functions, naming them tends to make code more self-explanatory and thus easier to read for those who haven't read it before:
+Даже в простых случаях имена делают код более самодокументируемым:
 
 ```js
 people.map( function getPreferredName(person){
@@ -822,111 +713,79 @@ people.map( function getPreferredName(person){
 // ..
 ```
 
-The function name `getPreferredName(..)` tells the reader something about what the mapping operation is intending to do that is not entirely obvious from just its code. This name label helps the code be more readable.
-
-Another place where anonymous function expressions are common is with immediately invoked function expressions (IIFEs):
+Анонимные функции часто встречаются в IIFE:
 
 ```js
 (function(){
-
-    // look, I'm an IIFE!
-
+    // IIFE!
 })();
 ```
 
-You virtually never see IIFEs using names for their function expressions, but they should. Why? For all the same reasons we just went over: stack trace debugging, reliable self-reference, and readability. If you can't come up with any other name for your IIFE, at least use the word IIFE:
+Но гораздо полезнее дать имя:
 
 ```js
 (function IIFE(){
-
-    // You already knew I was an IIFE!
-
+    // Я — IIFE!
 })();
 ```
 
-What I'm getting at is there are multiple reasons why **named functions are always more preferable to anonymous functions.** As a matter of fact, I'd go so far as to say that there's basically never a case where an anonymous function is more preferable. They just don't really have any advantage over their named counterparts.
+**Вывод:** Именованные функции всегда предпочтительнее анонимных. Если не можете придумать имя — возможно, вы не до конца понимаете назначение этой функции.
 
-It's incredibly easy to write anonymous functions, because it's one less name we have to devote our mental attention to figuring out.
+Я обычно использую имя `TODO` временно — и потом обязательно его замечаю перед коммитом.
 
-I'll be honest; I'm as guilty of this as anyone. I don't like to struggle with naming. The first few names I come up with for a function are usually bad. I have to revisit the naming over and over. I'd much rather just punt with a good ol' anonymous function expression.
+Чем тщательнее вы подбираете имена, тем лучше понимаете свой код, и тем выше его качество и поддерживаемость.
 
-But we're trading ease-of-writing for pain-of-reading. This is not a good trade-off. Being lazy or uncreative enough to not want to figure out names for your functions is an all too common, but poor, excuse for using anonymous functions.
+### Функции без `function`
 
-**Name every single function.** And if you sit there stumped, unable to come up with a good name for some function you've written, I'd strongly suggest you don't fully understand that function's purpose yet -- or it's just too broad or abstract. You need to go back and re-design the function until this is more clear. And by that point, a name will become more apparent.
-
-In my practice, if I don't have a good name to use for a function, I name it `TODO` initially. I'm certain that I'll at least catch that later when I search for "TODO" comments before committing code.
-
-I can testify from my own experience that in the struggle to name something well, I usually have come to understand it better, later, and often even refactor its design for improved readability and maintainability.
-
-This time investment is well worth it.
-
-### Functions Without `function`
-
-So far we've been using the full canonical syntax for functions. But you've no doubt also heard all the buzz around the ES6 `=>` arrow function syntax.
-
-Compare:
+Наверняка вы слышали про синтаксис стрелочных функций ES6 (`=>`):
 
 ```js
 people.map( function getPreferredName(person){
     return person.nicknames[0] || person.firstName;
 } );
 
-// vs.
+// или
 
 people.map( person => person.nicknames[0] || person.firstName );
 ```
 
-Whoa.
+Здесь исчезло всё: `function`, `return`, скобки, фигурные скобки, точка с запятой — и имя функции.
 
-The keyword `function` is gone, so is `return`, the parentheses (`( )`), the curly braces (`{ }`), and the innermost semicolon (`;`). In place of all that, we used a so-called fat arrow symbol (`=>`).
+Стрелочные функции всегда анонимны; имя можно лишь попытаться вывести из контекста, но чаще всего оно будет отсутствовать.
 
-But there's another thing we omitted. Did you spot it? The `getPreferredName` function name.
+Если возникнет ошибка, в stack trace отобразится `(anonymous function)`.
 
-That's right; `=>` arrow functions are lexically anonymous; there's no way to syntactically provide it a name. Their names can be inferred like regular functions, but again, the most common case of function expression values passed as arguments won't get any assistance in that way. Bummer.
-
-If `person.nicknames` isn't defined for some reason, an exception will be thrown, meaning this `(anonymous function)` will be at the top of the stack trace. Ugh.
-
-Honestly, the anonymity of `=>` arrow functions is a `=>` dagger to the heart, for me. I cannot abide by the loss of naming. It's harder to read, harder to debug, and impossible to self-reference.
-
-But if that wasn't bad enough, the other slap in the face is that there's a whole bunch of subtle syntactic variations that you must wade through if you have different scenarios for your function definition. I'm not going to cover all of them in detail here, but briefly:
+Кроме того, синтаксис стрелочных функций довольно разнороден:
 
 ```js
 people.map( person => person.nicknames[0] || person.firstName );
-
-// multiple parameters? need ( )
-people.map( (person,idx) => person.nicknames[0] || person.firstName );
-
-// parameter destructuring? need ( )
+// несколько параметров — нужны скобки
+people.map( (person, idx) => person.nicknames[0] || person.firstName );
+// деструктуризация — нужны скобки
 people.map( ({ person }) => person.nicknames[0] || person.firstName );
-
-// parameter default? need ( )
+// значение по умолчанию — нужны скобки
 people.map( (person = {}) => person.nicknames[0] || person.firstName );
-
-// returning an object? need ( )
+// возвращаем объект — нужны скобки
 people.map( person =>
     ({ preferredName: person.nicknames[0] || person.firstName })
 );
 ```
 
-The case for excitement over `=>` in the FP world is primarily that it follows almost exactly from the mathematical notation for functions, especially in FP languages like Haskell. The shape of `=>` arrow function syntax communicates mathematically.
+FP-сообщество любит стрелочные функции за лаконичность и сходство с математическим стилем. Это облегчает комбинирование функций.
 
-Digging even further, I'd suggest that the argument in favor of `=>` is that by using much lighter-weight syntax, we reduce the visual boundaries between functions which lets us use simple function expressions much like we'd use lazy expressions -- another favorite of the FPer.
+Я лично предпочитаю именованные функции для читаемости и отладки, но вы вправе решать сами.
 
-I think most FPers are going to wave off the concerns I'm sharing. They love anonymous functions and they love saving on syntax. But like I said before: you decide.
+**Примечание:** Хотя в продакшене я их почти не использую, для быстрых экспериментов стрелочные функции очень удобны. В этой книге мы тоже будем их использовать.
 
-**Note:** Though I do not prefer to use `=>` in practice in my production code, they are useful in quick code explorations. Moreover, we will use arrow functions in many places throughout the rest of this book -- especially when we present typical FP utilities -- where conciseness is preferred to optimize for the limited physical space in code snippets. Make your own determinations whether this approach will make your own production-ready code more or less readable.
+## Что такое this?
 
-## What's This?
+Если вы не знакомы с правилами связывания `this` в JS, рекомендую книгу *You Don't Know JS: this & Object Prototypes*. Здесь мы будем считать, что вы знакомы с этим понятием.
 
-If you're not familiar with the `this` binding rules in JavaScript, I recommend checking out my book *You Don't Know JS: this & Object Prototypes*. For the purposes of this section, I'll assume you know how `this` gets determined for a function call (one of the four rules). But even if you're still fuzzy on *this*, the good news is we're going to conclude that you shouldn't be using `this` if you're trying to do FP.
+**Замечание:** Мы обсуждаем тему, от которой позже откажемся. Почему? Потому что `this` влияет на другие темы книги, например, на композицию функций.
 
-**Note:** We're tackling a topic that we'll ultimately conclude we shouldn't use. Why!? Because the topic of `this` has implications for other topics covered later in this book. For example, our notions of function purity are impacted by `this` being essentially an implicit input to a function (see [Chapter 5](ch5.md)). Additionally, our perspective on `this` affects whether we choose array methods (`arr.map(..)`) versus standalone utilities (`map(..,arr)`) (see [Chapter 9](ch9.md)). Understanding `this` is essential to understanding why `this` really should *not* be part of your FP!
+В JavaScript у функций есть ключевое слово `this`, которое автоматически связывается при вызове. Я предпочитаю рассматривать его как неявный параметр вашей функции.
 
-JavaScript `function`s have a `this` keyword that's automatically bound per function call. The `this` keyword can be described in many different ways, but I prefer to say it provides an object context for the function to run against.
-
-`this` is an implicit parameter input for your function.
-
-Consider:
+Пример:
 
 ```js
 function sum() {
@@ -947,7 +806,7 @@ var s = sum.bind( context );
 s();                        // 3
 ```
 
-Of course, if `this` can be input into a function implicitly, the same object context could be sent in as an explicit argument:
+Но можно передавать контекст явно:
 
 ```js
 function sum(ctx) {
@@ -962,9 +821,9 @@ var context = {
 sum( context );
 ```
 
-Simpler. And this kind of code will be a lot easier to deal with in FP. It's much easier to wire multiple functions together, or use any of the other input wrangling techniques we will get into in the next chapter, when inputs are always explicit. Doing them with implicit inputs like `this` ranges from awkward to nearly impossible depending on the scenario.
+Это проще и лучше подходит для FP, облегчая композицию функций.
 
-There are other tricks we can leverage in a `this`-based system, including prototype-delegation (also covered in detail in *You Don't Know JS: this & Object Prototypes*):
+Прототипное наследование — ещё одна область применения `this`:
 
 ```js
 var Auth = {
@@ -981,7 +840,7 @@ var Auth = {
 };
 
 var Login = Object.assign( Object.create( Auth ), {
-    doLogin(user,pw) {
+    doLogin(user, pw) {
         this.username = user;
         this.password = pw;
         this.authorize();
@@ -997,11 +856,9 @@ var Login = Object.assign( Object.create( Auth ), {
 Login.doLogin( "fred", "123456" );
 ```
 
-**Note:** `Object.assign(..)` is an ES6+ utility for doing a shallow assignment copy of properties from one or more source objects to a single target object: `Object.assign( target, source1, ... )`.
+**Примечание:** `Object.assign(..)` — это ES6+ утилита для поверхностного копирования свойств.
 
-In case you're having trouble parsing what this code does: we have two separate objects `Login` and `Auth`, where `Login` performs prototype-delegation to `Auth`. Through delegation and the implicit `this` context sharing, these two objects virtually compose during the `this.authorize()` function call, so that properties/methods on `this` are dynamically shared with the `Auth.authorize(..)` function.
-
-*This* code doesn't fit with various principles of FP for a variety of reasons, but one of the obvious hitches is the implicit `this` sharing. We could be more explicit about it and keep code closer to FP-friendly style:
+В целом, использование неявных входов через `this` не соответствует принципам FP. Лучше всегда быть явным:
 
 ```js
 // ..
@@ -1016,7 +873,7 @@ authorize(ctx) {
 
 // ..
 
-doLogin(user,pw) {
+doLogin(user, pw) {
     Auth.authorize( {
         username: user,
         password: pw
@@ -1026,18 +883,18 @@ doLogin(user,pw) {
 // ..
 ```
 
-From my perspective, the problem is not with using objects to organize behavior. It's that we're trying to use implicit input instead of being explicit about it. When I'm wearing my FP hat, I want to leave `this` stuff on the shelf.
+Проблема не в организации кода через объекты, а в том, что мы используем неявные входы вместо явных.
 
-## Summary
+## Итоги
 
-Functions are powerful.
+Функции — это мощный инструмент.
 
-But let's be clear what a function is. It's not just a collection of statements/operations. Specifically, a function needs one or more inputs (ideally, just one!) and an output.
+Но важно понимать, что такое функция: это не просто набор операций, а обязательно — один или несколько входов (желательно один!) и выход.
 
-Functions inside of functions can have closure over outer variables and remember them for later. This is one of the most important concepts in all of programming, and a fundamental foundation of FP.
+Функции внутри функций могут иметь замыкания на внешние переменные и "помнить" их. Это важнейшая идея во всём программировании и основа FP.
 
-Be careful of anonymous functions, especially `=>` arrow functions. They're convenient to write, but they shift the cost from author to reader. The whole reason we're studying FP here is to write more readable code, so don't be so quick to jump on that bandwagon.
+Осторожнее с анонимными функциями, особенно со стрелочными. Они удобны, но их сложнее читать и отлаживать.
 
-Don't use `this`-aware functions. Just don't.
+Не используйте функции, зависящие от `this`. Просто не стоит.
 
-You should now be developing a clear and colorful perspective in your mind of what *function* means in Functional Programming. It's time to start wrangling functions to get them to interoperate, and the next chapter teaches you a variety of critical techniques you'll need along the way.
+Теперь у вас должно быть чёткое и яркое представление о том, что такое *функция* в FP. Пора учиться "запрягать" функции друг с другом и строить более сложные структуры!
